@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>State List</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+  </head>
+  <body>
+    <h1>State List</h1>
+    <ul>
+      <%
+        var list = []; 
+        var xlist = []; 
+        var llist = '';
+        var total = 0;
+        console.log(statelist[0]);
+        console.log(typeof(statelist[0]));
+        var new1 = JSON.stringify(statelist[0]);
+        console.log(typeof(new1));
+        console.log((new1));
+        var new2 = JSON.parse(new1);
+        console.log(typeof(new2));
+        console.log((new2));
+        for (i = 0; i < statelist.length; i++) {
+          console.log(statelist[i].State);
+          llist+='<li>'+statelist[i].State+'</li>';          
+          console.log(statelist[i]["TreeCover2018(ha)"]);
+          list.push(parseFloat(statelist[i]["TreeCover2018(ha)"]));
+          var xl = "'"+(statelist[i].State)+"'";
+          xlist.push(xl);
+
+        }
+      %>
+      <%- llist  %>
+      <%- list  %>
+    </ul>
+    total
+    <%= llist %>
+    <%= list %>
+    <div class="container">
+        asdfg<%= llist %>
+        <canvas id = "myChart"></canvas>
+    </div>
+    <script>
+      let myChart = document.getElementById("myChart").getContext('2d');
+    Chart.defaults.global.defaultFontFamily = 'Lato';
+    Chart.defaults.global.defaultFontSize = 18;
+    Chart.defaults.global.defaultFontColor = '#777';
+    let chart = new Chart(myChart, {
+        type: 'bar',
+        data:{
+            labels:[<%- xlist %>],
+            datasets:[{
+                label:'TOF',
+                data: [ <%- list %>],
+                backgroundColor:[
+                    'rgba(255, 99, 132, .89)',
+                    'rgba(54, 162, 235, .89)',
+                    'rgba(255, 206, 86, .89)',
+                    'rgba(75, 192, 192, .89)',
+                    'rgba(153, 102, 255, .89)',
+                    'rgba(255, 159, 64, .89)',
+                    'rgba(255, 99, 132, .89)',
+                    'rgba(255, 99, 132, .89)',
+                    'rgba(54, 162, 235, .89)',
+                    'rgba(255, 206, 86, .89)',
+                    'rgba(75, 192, 192, .89)',
+                    'rgba(153, 102, 255, .89)',
+                    'rgba(255, 159, 64, .89)',
+                    'rgba(255, 99, 132, .89)',
+                    'rgba(255, 206, 86, .89)',
+                    'rgba(75, 192, 192, .89)',
+                    'rgba(153, 102, 255, .89)',
+                ],
+                borderWidth:1,
+                borderColor:'#777',
+                hoverBorderWidth:3,
+                hoverBorderColor:'#000'
+            }]
+        },
+        options:{
+            title:{
+            display:true,
+            text:'Tof',
+            fontSize:25
+            },
+            legend:{
+            display:true,
+            position:'right',
+            labels:{
+                fontColor:'#000'
+            }
+            },
+            layout:{
+            padding:{
+                left:50,
+                right:0,
+                bottom:0,
+                top:0
+            }
+            },
+            tooltips:{
+            enabled:true
+            }
+        }
+        
+    });
+    </script>
+  </body>
+</html>

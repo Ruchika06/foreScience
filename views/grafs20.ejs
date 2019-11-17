@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visualisations</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+  </head>
+<body>
+    <h1>Graffs</h1>
+    <h2>For the Year 2020</h2>
+    <div>
+    <%
+    var xlist = []; 
+    var lt1 = [];
+     var s1 = '';
+     var lco2 = [];
+     var lrf = [];
+     var ltg = [];
+     var lls  =[];
+     var tot=0;
+     var co2 = 0;
+     var rf = 0;
+     var tg = 0;
+     var ls = 0;
+     console.log('some');
+     var wc1 = 0.8707381;
+     var wc0 = 0.00050398;
+     var rfc = [-0,1541228, 1.67115036,  5.1275562 , -1.22065949, -7.1456526 ,2.05320647];
+     var tgc = [1.02932011, 0.98364354, -7.40254293, -1.07142567,  8.41235556, -2.19182455];
+     var lsc = [-0.06574923, -0.94411047,  1.31022647,  0.43473113];
+     for(i =0;i < grafs.length;i++){
+        var xx = (grafs[i]["TreeCover2011(ha)"]);
+        co2 = wc1*(parseFloat(Math.abs(xx)))+wc0;
+        rf = 0;tg = 0;ls=0;
+        for(j=0;j < 6;j++ ){
+            rf += (Math.pow(xx,j)*rfc[j]);
+            tg+=(Math.pow(xx,j)*tgc[j]);
+        }
+        ls = lsc[0]+lsc[1]*grafs[i]["Annual Timber Production(million tonnes)"]+lsc[2]*grafs[i]["Annual Fuelwood Collection(million tonnes)"]+lsc[3]*grafs[i]["TerrestrialDegradation(ha)"];
+        console.log(co2);
+        lco2.push(co2);
+        console.log(rf);
+        lrf.push(rf);
+        console.log(tg);
+        ltg.push(tg);
+        console.log(ls);
+        lls.push(ls);
+        var xl = "'"+(grafs[i].State)+"'";
+        xlist.push(xl);
+     }
+     %>
+    </div>
+    <div class="container">
+      <div class="cl1">  
+      
+        <canvas id = "myChart1" height="150" width="400" ></canvas></div>
+        <div class="cl2">
+        
+
+        <canvas id = "myChart2" height="150" width="400"></canvas></div>
+        <div class="cl3">
+        
+
+        <canvas id = "myChart3" height="150" width="400"></canvas></div>
+        <div class="cl4">
+        
+
+        <canvas id = "myChart4" height="150" width="400"></canvas></div>
+    </div>
+    <script>
+        let myChart1 = document.getElementById("myChart1").getContext('2d');
+      Chart.defaults.global.defaultFontFamily = 'Lato';
+      Chart.defaults.global.defaultFontSize = 18;
+      Chart.defaults.global.defaultFontColor = '#777';
+      let chart1 = new Chart(myChart1, {
+          type: 'bar',
+          data:{
+              labels:[<%- xlist %>],
+              datasets:[{
+                  label:'Carbon Dioxide emissions',
+                  data: [ <%- lco2 %>],
+                  backgroundColor:[
+                      'rgba(255, 99, 132, .89)',
+                      'rgba(54, 162, 235, .89)',
+                      'rgba(255, 206, 86, .89)',
+                      'rgba(75, 192, 192, .89)',
+                      'rgba(153, 102, 255, .89)',
+                      'rgba(255, 159, 64, .89)',
+                      'rgba(255, 99, 132, .89)',
+                      'rgba(255, 99, 132, .89)',
+                      'rgba(54, 162, 235, .89)',
+                      'rgba(255, 206, 86, .89)',
+                      'rgba(75, 192, 192, .89)',
+                      'rgba(153, 102, 255, .89)',
+                      'rgba(255, 159, 64, .89)',
+                      'rgba(255, 99, 132, .89)',
+                      'rgba(255, 206, 86, .89)',
+                      'rgba(75, 192, 192, .89)',
+                      'rgba(153, 102, 255, .89)',
+                  ],
+                  borderWidth:1,
+                  borderColor:'#777',
+                  hoverBorderWidth:3,
+                  hoverBorderColor:'#000'
+              }]
+          },
+          options:{
+              title:{
+              display:true,
+              text:'Carbon Dioxide emissions',
+              fontSize:25
+              },
+              legend:{
+              display:true,
+              position:'right',
+              labels:{
+                  fontColor:'#000'
+              }
+              },
+              layout:{
+              padding:{
+                  left:50,
+                  right:0,
+                  bottom:0,
+                  top:0
+              }
+              },
+              tooltips:{
+              enabled:true
+              }
+          }
+          
+      });
+        let myChart2 = document.getElementById("myChart2").getContext('2d');
+          let chart2 = new Chart(myChart2, {
+              type: 'bar',
+              data:{
+                  labels:[<%- xlist %>],
+                  datasets:[{
+                      label:'Rainfall ',
+                      data: [ <%- lrf %>],
+                      backgroundColor:[
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(54, 162, 235, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                          'rgba(255, 159, 64, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(54, 162, 235, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                          'rgba(255, 159, 64, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                      ],
+                      borderWidth:1,
+                      borderColor:'#777',
+                      hoverBorderWidth:3,
+                      hoverBorderColor:'#000'
+                  }]
+              },
+              options:{
+                  title:{
+                  display:true,
+                  text:'Rainfall',
+                  fontSize:25
+                  },
+                  legend:{
+                  display:true,
+                  position:'right',
+                  labels:{
+                      fontColor:'#000'
+                  }
+                  },
+                  layout:{
+                  padding:{
+                      left:50,
+                      right:0,
+                      bottom:0,
+                      top:0
+                  }
+                  },
+                  tooltips:{
+                  enabled:true
+                  }
+              }
+              
+          });
+              let myChart3 = document.getElementById("myChart3").getContext('2d');
+            let chart3 = new Chart(myChart3, {
+                type: 'bar',
+                data:{
+                    labels:[<%- xlist %>],
+                    datasets:[{
+                        label:'Vegetation Degradation',
+                        data: [ <%- ltg %>],
+                        backgroundColor:[
+                            'rgba(255, 99, 132, .89)',
+                            'rgba(54, 162, 235, .89)',
+                            'rgba(255, 206, 86, .89)',
+                            'rgba(75, 192, 192, .89)',
+                            'rgba(153, 102, 255, .89)',
+                            'rgba(255, 159, 64, .89)',
+                            'rgba(255, 99, 132, .89)',
+                            'rgba(255, 99, 132, .89)',
+                            'rgba(54, 162, 235, .89)',
+                            'rgba(255, 206, 86, .89)',
+                            'rgba(75, 192, 192, .89)',
+                            'rgba(153, 102, 255, .89)',
+                            'rgba(255, 159, 64, .89)',
+                            'rgba(255, 99, 132, .89)',
+                            'rgba(255, 206, 86, .89)',
+                            'rgba(75, 192, 192, .89)',
+                            'rgba(153, 102, 255, .89)',
+                        ],
+                        borderWidth:1,
+                        borderColor:'#777',
+                        hoverBorderWidth:3,
+                        hoverBorderColor:'#000'
+                    }]
+                },
+                options:{
+                    title:{
+                    display:true,
+                    text:'Vegetation Degradation',
+                    fontSize:25
+                    },
+                    legend:{
+                    display:true,
+                    position:'right',
+                    labels:{
+                        fontColor:'#000'
+                    }
+                    },
+                    layout:{
+                    padding:{
+                        left:50,
+                        right:0,
+                        bottom:0,
+                        top:0
+                    }
+                    },
+                    tooltips:{
+                    enabled:true
+                    }
+                }
+                
+            });
+            let myChart4 = document.getElementById("myChart4").getContext('2d');
+          let chart4 = new Chart(myChart4, {
+              type: 'bar',
+              data:{
+                  labels:[<%- xlist %>],
+                  datasets:[{
+                      label:'Loss of Forestation',
+                      data: [ <%- lls %>],
+                      backgroundColor:[
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(54, 162, 235, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                          'rgba(255, 159, 64, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(54, 162, 235, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                          'rgba(255, 159, 64, .89)',
+                          'rgba(255, 99, 132, .89)',
+                          'rgba(255, 206, 86, .89)',
+                          'rgba(75, 192, 192, .89)',
+                          'rgba(153, 102, 255, .89)',
+                      ],
+                      borderWidth:1,
+                      borderColor:'#777',
+                      hoverBorderWidth:3,
+                      hoverBorderColor:'#000'
+                  }]
+              },
+              options:{
+                  title:{
+                  display:true,
+                  text:'Loss of Forestation',
+                  fontSize:25
+                  },
+                  legend:{
+                  display:true,
+                  position:'right',
+                  labels:{
+                      fontColor:'#000'
+                  }
+                  },
+                  layout:{
+                  padding:{
+                      left:50,
+                      right:0,
+                      bottom:0,
+                      top:0
+                  }
+                  },
+                  tooltips:{
+                  enabled:true
+                  }
+              }
+              
+          });
+          </script> 
+</body>
+</html>

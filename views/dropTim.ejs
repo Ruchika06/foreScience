@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Visualisations</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+  </head>
+<body>
+    <h1>Changing Effects</h1>
+    <h2>Due to change in timber production for the State: <i><b><%=stte%></b></i></h2>
+    <div>
+    <%
+    console.log(stte);
+    console.log(perch);
+    var i=0;
+    var ls=0; 
+    var rf  =0;
+    var tg=0;
+    var wc1 = 0.8707381;
+     var wc0 = 0.00050398;
+     var rfc = [-0,1541228, 1.67115036,  5.1275562 , -1.22065949, -7.1456526 ,2.05320647];
+     var tgc = [1.02932011, 0.98364354, -7.40254293, -1.07142567,  8.41235556, -2.19182455];
+     var lsc = [-0.06574923, -0.94411047,  1.31022647,  0.43473113];
+    for(;i < data.length;i++){
+        if(data[i]["State"]==stte){
+            console.log('123', i);
+            break;
+        }
+    }
+    console.log(i);
+    var xx = parseFloat(data[i]["TreeCover2018(ha)"]);
+    ls = lsc[0]+(1+parseInt(perch))*lsc[1]*data[i]["Annual Timber Production(million tonnes)"]+lsc[2]*data[i]["Annual Fuelwood Collection(million tonnes)"]+lsc[3]*data[i]["TerrestrialDegradation(ha)"];
+    xx = ls;
+    co2 = wc1*(parseFloat((xx)))+wc0;
+    rf = 0;tg = 0;
+    for(j=0;j < 6;j++ ){
+            rf += (Math.pow(xx,j)*rfc[j]);
+            tg+=(Math.pow(xx,j)*tgc[j]);
+    }
+    %>
+    </div>
+
+
+    <h3>The percentage loss/gain in area is: 
+            <%= ls %>
+        </h3>
+        <h3>The percentage loss/gain in rainfall  is: 
+                <%= rf %>
+            </h3>
+            <h3>The percentage loss/gain in Vegetation degradation is: 
+                    <%= tg %>
+                </h3>
+                <h3>The percentage loss/gain in Carbon Dioxide content is: 
+                        <%= co2 %>
+                    </h3>
+
+                   <h4> The increasing use of wood in the timber industries is leading to deforestation in the location which has further adverse effects on the rainfall as well as greenhouse gases in the atmosphere.Transition from wood-based furniture to other fibres/marble etc. must be promoted.Go paperless! Go digital!"
+ </h4>   </body>
+    </html>
